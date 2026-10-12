@@ -27,15 +27,12 @@ pipeline {
                     docker push %IMAGE%:%BUILD_NUMBER%
                     """
                 }
-                        stage('Deploy image') {
+            }
+        }
+        stage('Deploy image') {
             steps {
-                bat '''
-                docker rm -f tp4container3
+                bat """
+                docker rm -f tp4container3 >nul 2>&1
                 docker run -d --name tp4container3 -p 8083:80 %IMAGE%:%BUILD_NUMBER%
-                '''
+                """
             }
-        }
-            }
-        }
-    }
-}
